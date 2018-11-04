@@ -1,0 +1,31 @@
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_MODULE = __name__[:__name__.rfind(
+    '.')] if '.' in __name__ else PACKAGE_ROOT.split(os.sep)[-1]
+
+SITE_URL = "https://www.example.com"
+
+ALLOWED_HOSTS = ['www.example.com']
+
+DEBUG = False
+
+STATIC_URL = '/static/'
+STATIC_PATH = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = '/opt/static'
+STATICFILES_DIRS = (STATIC_PATH,)
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = '/opt/media'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'HOST': 'postgres', # name of the postgres service defined in docker-compose
+        'PORT': 5432  # default postgres port
+    }
+}
+
+SECRET_KEY = os.environ["SECRET_KEY"]

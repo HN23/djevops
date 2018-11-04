@@ -1,0 +1,26 @@
+version: '3.7'
+
+services:
+  django-app:
+    build: ./django-app
+    volumes:
+      - ./django-app/env/media:/opt/media
+      - ./django-app/env/static:/opt/static
+    ports:
+      - 8000
+    environment:
+      - SECRET_KEY=somthing_secret
+    depends_on:
+      - postgres
+  postgres:
+    image: postgres:10.5-alpine
+    volumes:
+      - ./postgres/data:/var/lib/postgresql/data/
+  nginx:
+    build: ./nginx
+    ports:
+      - 80:80
+    depends_on:
+      - django-app
+    volumes:
+      - ./django-app/env/static:/opt/static
